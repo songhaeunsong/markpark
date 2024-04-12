@@ -1,4 +1,11 @@
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+  const showMap = useCallback(() => {
+    navigate("/map");
+  }, [navigate]);
   return (
     <>
       <div className="flex">
@@ -14,7 +21,9 @@ const Home = () => {
               주변에 있는 주차장을 바로 확인하세요 !
             </p>
           </div>
-          <button className="py-2 px-5">내 주변 주차장 찾기</button>
+          <button onClick={showMap} className="py-2 px-5">
+            내 주변 주차장 찾기
+          </button>
         </div>
       </div>
     </>
