@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { CurrentLocation } from "../types/types";
+import { ICurrentLocation } from "../typings/db";
 
 export const useGeolocation = () => {
-  const [currentLocation, setCurrentLocation] = useState<CurrentLocation>({
+  const [currentLocation, setCurrentLocation] = useState<ICurrentLocation>({
     lat: 37.5664056,
     lng: 126.9778222,
   });
