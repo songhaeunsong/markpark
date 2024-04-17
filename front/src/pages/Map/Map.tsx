@@ -3,6 +3,7 @@ import { useGeolocation } from "../../hooks/useGeolocation";
 import Loading from "../../component/Loading";
 import { getCloseParkings } from "../../api/parkingApi";
 import { useQuery } from "@tanstack/react-query";
+import { addMarker, createMap } from "../../utils/naverMap";
 
 const Map = () => {
   const mapRef = useRef(null);
@@ -21,41 +22,15 @@ const Map = () => {
     }
   );
 
-  const createMap = (location: naver.maps.LatLng): naver.maps.Map => {
-    return new naver.maps.Map(mapRef.current!, {
-      center: location,
-      zoom: 17,
-    });
-  };
-
-  const addMarker = (
-    map: naver.maps.Map,
-    position: naver.maps.LatLng,
-    url?: string
-  ): void => {
-    new naver.maps.Marker({
-      position,
-      map,
-      icon: url
-        ? {
-            url,
-            size: new naver.maps.Size(35, 48),
-            origin: new naver.maps.Point(0, 0),
-            anchor: new naver.maps.Point(17, 48),
-          }
-        : "",
-    });
-  };
-
   useEffect(() => {
     if (!mapRef.current || !closeParkingsData) return;
 
-    const location = new naver.maps.LatLng(
+    const userLocation = new naver.maps.LatLng(
       currentLocation.lat,
       currentLocation.lng
     );
-    const map = createMap(location);
-    addMarker(map, location);
+    const map = createMap(userLocation, mapRef);
+    addMarker(map, userLocation);
 
     closeParkingsData.forEach((parking) => {
       const position = new naver.maps.LatLng(
