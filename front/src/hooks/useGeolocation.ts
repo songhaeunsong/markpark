@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { CurrentLocation } from "../types/types";
+import { ILocation } from "../typings/db";
 
 export const useGeolocation = () => {
-  const [currentLocation, setCurrentLocation] = useState<CurrentLocation>({
-    lat: 37.5664056,
-    lng: 126.9778222,
+  const [currentLocation, setCurrentLocation] = useState<ILocation>({
+    lat: 0,
+    lng: 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +22,10 @@ export const useGeolocation = () => {
     };
 
     const error = () => {
+      setCurrentLocation({
+        lat: 37.5664056,
+        lng: 126.9778222,
+      });
       setLoading(false);
     };
 
