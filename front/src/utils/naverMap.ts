@@ -11,18 +11,25 @@ export const createMap = (
 export const addMarker = (
   map: naver.maps.Map,
   position: naver.maps.LatLng,
-  url?: string
+  url?: string,
+  options?: {
+    width: number;
+    height: number;
+    anchorX: number;
+    anchorY: number;
+  }
 ): void => {
   new naver.maps.Marker({
     position,
     map,
-    icon: url
-      ? {
-          url,
-          size: new naver.maps.Size(35, 48),
-          origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(17, 48),
-        }
-      : "",
+    icon:
+      url && options
+        ? {
+            url,
+            scaledSize: new naver.maps.Size(options.width, options.height),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(options.anchorX, options.anchorY),
+          }
+        : "",
   });
 };

@@ -24,20 +24,30 @@ const Map = () => {
 
   useEffect(() => {
     if (!mapRef.current || !closeParkingsData) return;
-
     const userLocation = new naver.maps.LatLng(
       currentLocation.lat,
       currentLocation.lng
     );
     const map = createMap(userLocation, mapRef);
-    addMarker(map, userLocation);
+    addMarker(map, userLocation, "/user-marker.png", {
+      width: 20,
+      height: 20,
+      anchorX: 10,
+      anchorY: 10,
+    });
 
     closeParkingsData.forEach((parking) => {
       const position = new naver.maps.LatLng(
         +parking.latitude,
         +parking.longitude
       );
-      addMarker(map, position, "/marker.png");
+
+      addMarker(map, position, "/marker.png", {
+        width: 30,
+        height: 41,
+        anchorX: 15,
+        anchorY: 41,
+      });
     });
   }, [currentLocation, closeParkingsData]);
 
