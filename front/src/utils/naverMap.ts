@@ -18,8 +18,8 @@ export const addMarker = (
     anchorX: number;
     anchorY: number;
   }
-): void => {
-  new naver.maps.Marker({
+): naver.maps.Marker => {
+  const marker = new naver.maps.Marker({
     position,
     map,
     icon:
@@ -32,4 +32,5 @@ export const addMarker = (
           }
         : "",
   });
+  return marker;
 };
