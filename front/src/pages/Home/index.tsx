@@ -17,13 +17,13 @@ const Home = () => {
             <div className="w-80">
               <img src="/logo.png" alt="markpark-logo" />
             </div>
-            <p className="text-white font-medium mt-4 text-center">
+            <p className="mt-4 font-medium text-center text-white">
               주변에 있는 주차장을 바로 확인하세요 !
             </p>
           </div>
           <button
             onClick={showMap}
-            className="py-2 px-5 shadow-custom-purple transition-all hover:shadow-hover-purple hover:text-hover-color"
+            className="px-5 py-2 transition-all shadow-custom-purple hover:shadow-hover-purple hover:text-hover-color"
           >
             내 주변 주차장 찾기
           </button>

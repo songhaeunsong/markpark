@@ -30,7 +30,7 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
 
   return (
     <div className="p-6 rounded shadow-lg shadow-black/10">
-      <h3 className="mb-2 font-semibold text-base">
+      <h3 className="mb-2 text-base font-semibold">
         {parking.parkingName} ({parking.parkingType}, {parking.feeInfo})
       </h3>
       {parking.address && (
@@ -43,9 +43,9 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
         현재 위치에서 <span className="font-medium">{processedDistance}</span>{" "}
         만큼 떨어져 있어요!
       </p>
-      <div className="w-full flex justify-center">
+      <div className="flex justify-center w-full">
         <a href={naverMapUrl} target="blank">
-          <button className="px-4 py-1 shadow-custom-gray transition-all hover:shadow-hover-gray hover:text-hover-color">
+          <button className="px-4 py-1 transition-all shadow-custom-gray hover:shadow-hover-gray hover:text-hover-color">
             길찾기
           </button>
         </a>
