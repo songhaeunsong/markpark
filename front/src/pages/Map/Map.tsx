@@ -51,7 +51,9 @@ const Map = () => {
         anchorY: 41,
       });
 
-      const contentString = renderToString(<InfoWindow parking={parking} />);
+      const contentString = renderToString(
+        <InfoWindow parking={parking} userLocation={currentLocation} />
+      );
 
       let infowindow = new naver.maps.InfoWindow({
         content: contentString,
