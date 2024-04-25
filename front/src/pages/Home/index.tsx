@@ -21,7 +21,10 @@ const Home = () => {
               주변에 있는 주차장을 바로 확인하세요 !
             </p>
           </div>
-          <button onClick={showMap} className="py-2 px-5">
+          <button
+            onClick={showMap}
+            className="py-2 px-5 shadow-custom-purple transition-all hover:shadow-hover-purple hover:text-hover-color"
+          >
             내 주변 주차장 찾기
           </button>
         </div>
