@@ -1,9 +1,9 @@
 export const createMap = (
-  location: naver.maps.LatLng,
+  latlng: naver.maps.LatLng,
   ref: React.RefObject<HTMLDivElement>
 ): naver.maps.Map => {
   return new naver.maps.Map(ref.current!, {
-    center: location,
+    center: latlng,
     zoom: 17,
   });
 };
