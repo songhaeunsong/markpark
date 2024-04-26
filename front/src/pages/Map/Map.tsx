@@ -4,6 +4,8 @@ import Loading from "../../component/Loading";
 import { getCloseParkings } from "../../api/parkingApi";
 import { useQuery } from "@tanstack/react-query";
 import { addMarker, createMap } from "../../utils/naverMap";
+import InfoWindow from "../../component/InfoWindow";
+import { renderToString } from "react-dom/server";
 
 const Map = () => {
   const mapRef = useRef(null);
@@ -24,6 +26,7 @@ const Map = () => {
 
   useEffect(() => {
     if (!mapRef.current || !closeParkingsData) return;
+
     const userLocation = new naver.maps.LatLng(
       currentLocation.lat,
       currentLocation.lng
@@ -42,11 +45,30 @@ const Map = () => {
         +parking.longitude
       );
 
-      addMarker(map, position, "/marker.png", {
+      const marker = addMarker(map, position, "/marker.png", {
         width: 30,
         height: 41,
         anchorX: 15,
         anchorY: 41,
+      });
+
+      const contentString = renderToString(
+        <InfoWindow parking={parking} userLocation={currentLocation} />
+      );
+
+      let infoWindow = new naver.maps.InfoWindow({
+        content: contentString,
+        pixelOffset: new naver.maps.Point(3, 3),
+        borderColor: "none",
+        disableAnchor: true,
+      });
+
+      naver.maps.Event.addListener(marker, "click", function () {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, marker);
+        }
       });
     });
   }, [currentLocation, closeParkingsData]);

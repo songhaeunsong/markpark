@@ -1,9 +1,9 @@
 export const createMap = (
-  location: naver.maps.LatLng,
+  latlng: naver.maps.LatLng,
   ref: React.RefObject<HTMLDivElement>
 ): naver.maps.Map => {
   return new naver.maps.Map(ref.current!, {
-    center: location,
+    center: latlng,
     zoom: 17,
   });
 };
@@ -18,8 +18,8 @@ export const addMarker = (
     anchorX: number;
     anchorY: number;
   }
-): void => {
-  new naver.maps.Marker({
+): naver.maps.Marker => {
+  const marker = new naver.maps.Marker({
     position,
     map,
     icon:
@@ -32,4 +32,5 @@ export const addMarker = (
           }
         : "",
   });
+  return marker;
 };
