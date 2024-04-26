@@ -26,6 +26,7 @@ const Map = () => {
 
   useEffect(() => {
     if (!mapRef.current || !closeParkingsData) return;
+
     const userLocation = new naver.maps.LatLng(
       currentLocation.lat,
       currentLocation.lng
@@ -55,7 +56,7 @@ const Map = () => {
         <InfoWindow parking={parking} userLocation={currentLocation} />
       );
 
-      let infowindow = new naver.maps.InfoWindow({
+      let infoWindow = new naver.maps.InfoWindow({
         content: contentString,
         pixelOffset: new naver.maps.Point(3, 3),
         borderColor: "none",
@@ -63,10 +64,10 @@ const Map = () => {
       });
 
       naver.maps.Event.addListener(marker, "click", function () {
-        if (infowindow.getMap()) {
-          infowindow.close();
+        if (infoWindow.getMap()) {
+          infoWindow.close();
         } else {
-          infowindow.open(map, marker);
+          infoWindow.open(map, marker);
         }
       });
     });

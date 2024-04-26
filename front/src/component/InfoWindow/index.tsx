@@ -8,11 +8,7 @@ interface TProps {
 }
 
 const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
-  const processedDistance =
-    parking.distance > 1000
-      ? `${(parking.distance / 1000).toFixed(2)}km`
-      : `${Math.round(parking.distance)}m`;
-
+  // EPSG:4326 => EPSG:3857 좌표계로 변환
   const [parkingMercatorX, parkingMmercatorY] = coordinateConverter(
     +parking.latitude,
     +parking.longitude
@@ -22,11 +18,16 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
     userLocation.lng
   );
 
-  const naverMapUrl = `${
+  const directionsUrl = `${
     import.meta.env.VITE_NAVER_MAP_URL
   }/${userMercatorX},${userMercatorY},,ADDRESS_POI/${parkingMercatorX},${parkingMmercatorY},${
     parking.parkingName
   },,PLACE_POI/-/car`;
+
+  const processedDistance =
+    parking.distance > 1000
+      ? `${(parking.distance / 1000).toFixed(2)}km`
+      : `${Math.round(parking.distance)}m`;
 
   return (
     <div className="p-6 rounded shadow-lg shadow-black/10">
@@ -44,7 +45,7 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
         만큼 떨어져 있어요!
       </p>
       <div className="flex justify-center w-full">
-        <a href={naverMapUrl} target="blank">
+        <a href={directionsUrl} target="blank">
           <button className="px-4 py-1 transition-all shadow-custom-gray hover:shadow-hover-gray hover:text-hover-color">
             길찾기
           </button>
