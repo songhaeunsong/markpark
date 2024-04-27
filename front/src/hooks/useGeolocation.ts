@@ -1,42 +1,34 @@
-import { useState, useEffect } from "react";
-import { ILocation } from "../typings/db";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setUserLocation,
+  startLoading,
+} from "../features/location/locationSlice";
 
 export const useGeolocation = () => {
-  const [currentLocation, setCurrentLocation] = useState<ILocation>({
-    lat: 0,
-    lng: 0,
-  });
-  const [loading, setLoading] = useState(false);
-
-  const getPosition = () => {
-    setLoading(true);
-
-    const success = (location: {
-      coords: { latitude: number; longitude: number };
-    }) => {
-      setCurrentLocation({
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      });
-      setLoading(false);
-    };
-
-    const error = () => {
-      setCurrentLocation({
-        lat: 37.5664056,
-        lng: 126.9778222,
-      });
-      setLoading(false);
-    };
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getPosition();
-  }, []);
+    dispatch(startLoading());
+    const success = (position: {
+      coords: { latitude: number; longitude: number };
+    }) => {
+      dispatch(
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+      );
+    };
+    const error = () => {
+      dispatch(
+        setUserLocation({
+          lat: 37.5664056,
+          lng: 126.9778222,
+        })
+      );
+    };
 
-  return { currentLocation, loading };
+    navigator.geolocation.getCurrentPosition(success, error);
+  }, [dispatch]);
 };

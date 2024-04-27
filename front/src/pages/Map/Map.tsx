@@ -1,15 +1,22 @@
 import { useEffect, useRef } from "react";
+import { Provider, useSelector } from "react-redux";
+import store, { RootState } from "../../store";
+import { useQuery } from "@tanstack/react-query";
+import { renderToString } from "react-dom/server";
 import { useGeolocation } from "../../hooks/useGeolocation";
 import Loading from "../../component/Loading";
 import { getCloseParkings } from "../../api/parkingApi";
-import { useQuery } from "@tanstack/react-query";
 import { addMarker, createMap } from "../../utils/naverMap";
 import InfoWindow from "../../component/InfoWindow";
-import { renderToString } from "react-dom/server";
 
 const Map = () => {
   const mapRef = useRef(null);
-  const { currentLocation, loading } = useGeolocation();
+
+  useGeolocation();
+  const currentLocation = useSelector(
+    (state: RootState) => state.location.currentLocation
+  );
+  const isLoading = useSelector((state: RootState) => state.location.loading);
 
   const { data: closeParkingsData, isLoading: closeParkingsLoading } = useQuery(
     {
@@ -18,7 +25,7 @@ const Map = () => {
         getCloseParkings({
           latitude: currentLocation.lat,
           longitude: currentLocation.lng,
-          radius: 500,
+          radius: 2000,
         }),
       enabled: !!currentLocation,
     }
@@ -71,11 +78,11 @@ const Map = () => {
         }
       });
     });
-  }, [currentLocation, closeParkingsData]);
+  }, [currentLocation, closeParkingsData, mapRef]);
 
-  if (loading || closeParkingsLoading) return <Loading />;
+  if (isLoading || closeParkingsLoading) return <Loading />;
 
-  return !loading && <div ref={mapRef} className="w-screen h-screen"></div>;
+  return !isLoading && <div ref={mapRef} className="w-screen h-screen"></div>;
 };
 
 export default Map;
