@@ -4,7 +4,7 @@ const path = require("path");
 module.exports = {
   mode: "production",
   entry: {
-    bundle: path.resolve(__dirname, "./src/app.js"),
+    bundle: path.resolve(__dirname, "./app.js"), // 올바른 경로 사용
   },
   output: {
     path: path.resolve(__dirname, "back_dist"),
