@@ -1,11 +1,14 @@
 require("dotenv").config();
+// require("dotenv").config({ path: "../.env" });
+
 const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize(
-  "parkings",
-  "root",
-  process.env.MYSQL_PASSWORD,
+  process.env.RDS_DB_NAME,
+  process.env.RDS_USERNAME,
+  process.env.RDS_PASSWORD,
   {
-    host: "127.0.0.1",
+    host: process.env.RDS_HOSTNAME,
+    port: 3306,
     dialect: "mysql",
   }
 );
