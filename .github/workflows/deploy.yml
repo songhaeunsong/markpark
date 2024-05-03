@@ -58,6 +58,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
           source: "deployment.tar.gz"
           target: "/"
 
@@ -67,6 +68,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /
             tar -xzf deployment.tar.gz
