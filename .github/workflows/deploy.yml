@@ -48,6 +48,11 @@ jobs:
           cd back
           npm install
 
+      - name: Build Backend
+        run: |
+          cd back
+          npm run build
+
       - name: Archive build artifacts
         run: |
           tar -czf deployment.tar.gz -C front/dist . -C ../../back .
