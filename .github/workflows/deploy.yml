@@ -60,7 +60,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           source: "deployment.tar.gz"
-          target: "/markpark"
+          target: "/home/ec2-user/markpark"
 
       - name: Deploy application files and reload nginx
         uses: appleboy/ssh-action@master
@@ -70,7 +70,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /markpark
+            cd /home/ec2-user/markpark
             tar -xzf deployment.tar.gz
             pm2 restart all
             sudo systemctl reload nginx
