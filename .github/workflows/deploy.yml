@@ -55,8 +55,7 @@ jobs:
 
       - name: Archive build artifacts
         run: |
-          tar -czf deployment.tar.gz -C front/dist .
-          tar -rzf deployment.tar.gz -C back/back-dist .
+          tar -czf deployment.tar.gz -C front/dist . -C ../../back .
 
       - name: Copy files to the server
         uses: appleboy/scp-action@master
