@@ -5,7 +5,11 @@ const bodyParser = require("body-parser");
 const port = 8080;
 const parkingRoutes = require("./routes/parkingRoutes");
 
-const allowedOrigins = ["http://localhost:5173", "http://3.36.20.56"];
+const allowedOrigins = [
+  "https://markpark.site",
+  "http://markpark.site",
+  "http://localhost:5173",
+];
 
 app.use(
   cors({
