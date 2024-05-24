@@ -32,7 +32,7 @@ const Map = () => {
   );
 
   useEffect(() => {
-    if (!mapRef.current || !closeParkingsData) return;
+    if (!mapRef.current || !closeParkingsData || !currentLocation) return;
 
     const userLocation = new naver.maps.LatLng(
       currentLocation.lat,

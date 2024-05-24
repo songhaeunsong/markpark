@@ -8,13 +8,13 @@ const Home = () => {
   }, [navigate]);
   return (
     <>
-      <div className="flex">
-        <div className="w-80">
+      <div className="flex flex-col items-center justify-center md:flex-row">
+        <div className="w-60 md:w-80">
           <img src="/icon.png" alt="markpark-image" />
         </div>
-        <div className="flex flex-col">
-          <div className="h-40 mt-20">
-            <div className="w-80">
+        <div className="flex flex-col px-12 md:px-0">
+          <div className="h-40 mt-10 md:mt-0">
+            <div className="w-full md:w-80">
               <img src="/logo.png" alt="markpark-logo" />
             </div>
             <p className="mt-4 font-medium text-center text-white">
