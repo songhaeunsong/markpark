@@ -4,7 +4,7 @@ export const createMap = (
 ): naver.maps.Map => {
   return new naver.maps.Map(ref.current!, {
     center: latlng,
-    zoom: 17,
+    zoom: 15,
   });
 };
 

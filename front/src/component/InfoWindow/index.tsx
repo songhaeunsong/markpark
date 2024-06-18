@@ -19,7 +19,7 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
   );
 
   const directionsUrl = `${
-    import.meta.env.VITE_NAVER_MAP_URL
+    import.meta.env.VITE_NAVER_DIRECTIONS_URL
   }/${userMercatorX},${userMercatorY},,ADDRESS_POI/${parkingMercatorX},${parkingMmercatorY},${
     parking.parkingName
   },,PLACE_POI/-/car`;
