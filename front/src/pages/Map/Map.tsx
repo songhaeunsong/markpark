@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { setUserLocation } from "../../features/location/locationSlice";
 const Map = () => {
   const [locationSelectable, setLocationSelectable] = useState(false);
-  const mapContainerRef = useRef(null); // DOM 참조
+  const mapContainerRef = useRef(null);
   const mapRef = useRef<naver.maps.Map | null>(null);
   const dispatch = useDispatch();
   useGeolocation();
@@ -30,7 +30,7 @@ const Map = () => {
         getCloseParkings({
           latitude: currentLocation.lat,
           longitude: currentLocation.lng,
-          radius: 2000,
+          radius: 1000,
         }),
       enabled: !!currentLocation,
     }
