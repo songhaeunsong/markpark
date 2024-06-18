@@ -18,11 +18,7 @@ const InfoWindow: FC<TProps> = ({ parking, userLocation }) => {
     userLocation.lng
   );
 
-  const directionsUrl = `${
-    import.meta.env.VITE_NAVER_DIRECTIONS_URL
-  }/${userMercatorX},${userMercatorY},,ADDRESS_POI/${parkingMercatorX},${parkingMmercatorY},${
-    parking.parkingName
-  },,PLACE_POI/-/car`;
+  const directionsUrl = `https://map.naver.com/p/directions/${userMercatorX},${userMercatorY},,ADDRESS_POI/${parkingMercatorX},${parkingMmercatorY},${parking.parkingName},,PLACE_POI/-/car`;
 
   const processedDistance =
     parking.distance > 1000
