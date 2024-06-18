@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "../../store";
+import { RefObject, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { useQuery } from "@tanstack/react-query";
 import { renderToString } from "react-dom/server";
 import { useGeolocation } from "../../hooks/useGeolocation";
@@ -8,10 +8,15 @@ import Loading from "../../component/Loading";
 import { getCloseParkings } from "../../api/parkingApi";
 import { addMarker, createMap } from "../../utils/naverMap";
 import InfoWindow from "../../component/InfoWindow";
-
+import LocationSetting from "../../component/LocationSetting";
+import { LuMousePointerClick } from "react-icons/lu";
+import { useDispatch } from "react-redux";
+import { setUserLocation } from "../../features/location/locationSlice";
 const Map = () => {
-  const mapRef = useRef(null);
-
+  const [locationSelectable, setLocationSelectable] = useState(false);
+  const mapContainerRef = useRef(null); // DOM 참조
+  const mapRef = useRef<naver.maps.Map | null>(null);
+  const dispatch = useDispatch();
   useGeolocation();
   const currentLocation = useSelector(
     (state: RootState) => state.location.currentLocation
@@ -31,14 +36,25 @@ const Map = () => {
     }
   );
 
+  const handleLocationSelect = () => {
+    if (!mapRef.current) return;
+
+    const map = mapRef.current;
+    const mapCenter = map.getCenter();
+    dispatch(setUserLocation({ lat: mapCenter.y, lng: mapCenter.x }));
+  };
+
   useEffect(() => {
-    if (!mapRef.current || !closeParkingsData || !currentLocation) return;
+    if (!mapContainerRef.current || !closeParkingsData || !currentLocation)
+      return;
 
     const userLocation = new naver.maps.LatLng(
       currentLocation.lat,
       currentLocation.lng
     );
-    const map = createMap(userLocation, mapRef);
+    const map = createMap(userLocation, mapContainerRef);
+    mapRef.current = map;
+
     addMarker(map, userLocation, "/user-marker.png", {
       width: 20,
       height: 20,
@@ -78,11 +94,28 @@ const Map = () => {
         }
       });
     });
-  }, [currentLocation, closeParkingsData, mapRef]);
+  }, [currentLocation, closeParkingsData, mapRef, dispatch]);
 
   if (isLoading || closeParkingsLoading) return <Loading />;
 
-  return !isLoading && <div ref={mapRef} className="w-screen h-screen"></div>;
+  return (
+    !isLoading && (
+      <div ref={mapContainerRef} className="w-screen h-screen">
+        {locationSelectable && (
+          <div className="absolute z-50 transform top-49% left-48.8%">
+            <LuMousePointerClick size={27} />
+          </div>
+        )}
+        <div className="fixed z-10 m-7">
+          <LocationSetting
+            setLocationSelectable={setLocationSelectable}
+            locationSelectable={locationSelectable}
+            handleLocationSelect={handleLocationSelect}
+          />
+        </div>
+      </div>
+    )
+  );
 };
 
 export default Map;
