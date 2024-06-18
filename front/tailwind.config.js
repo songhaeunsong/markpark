@@ -3,6 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      spacing: {
+        "49%": "49%",
+        "48.8%": "48.8%",
+      },
       colors: {
         "main-violet": "#9859ff",
         "hover-color": "#2c0072",
